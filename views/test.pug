@@ -44,7 +44,7 @@ html(lang='en')
               small#fileHelpId.form-text.text-muted Pick an image no bigger than 9 Mb. Images whose size are bigger than 9mb will be resized and/or compressed.
               img#image-preview(src='#', alt='Preview', onerror='onError(this);')
             .col-xs-12
-              button.btn.btn-primary(type='button', onclick='submit()') Submit
+              button.btn.btn-primary#submitButton(type='submit') Submit
               button.btn.btn-danger(type='reset', onclick='alsoClearImage()') Reset
             .col-xs-12(style='padding-top:5px')
               .progress(style='height:20px')

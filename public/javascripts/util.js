@@ -1,6 +1,7 @@
-
+(function () {
   var shouldUpload = false;
   var compressed;
+
   function readURL(input) {
     if (input.files && input.files[0]) {
       var reader = new FileReader();
@@ -34,6 +35,28 @@
     }
   }
 
+  function init() {
+    $('#submitButton').click(submitButtonHandler);
+  }
+
+  function submitButtonHandler(evt) {
+    var testForm = document.getElementById('usrform');
+
+    //prevent form submission
+    evt.preventDefault();
+    evt.stopPropagation();
+
+    //make the AJAX call
+    $.ajax({
+      url: '/form',
+      type: 'POST',
+      data: {
+        link: testForm.link.value,
+        title: testForm.title.value
+      }
+    });
+  }
+
   $("#file").change(function () {
     readURL(this);
   });
@@ -49,28 +72,6 @@
   function alsoClearImage() {
     $('#image-preview').attr('src', '');
     shouldUpload = false;
-  }
-
-  function submit() {
-    if (shouldUpload) {
-      var formData = new FormData();
-      formData.append('link', $('#link').val());
-      formData.append('title', $('#title').val());
-      formData.append('desc', $('#desc').val());
-      formData.append('pic', compressed, 'picture.jpg');
-      console.log(formData.keys());
-      alert("hi");
-      $.ajax({
-        type: 'POST',
-        url: '/fbshare',
-        data: formData, // data to be submitted
-        dataType: 'json',
-        success: function (response) {
-          alert(response); // do what you like with the response
-          console.log('upload successful!\n' + data);
-        }
-      });
-    }
   }
 
   // scales the image by (float) scale < 1
@@ -230,3 +231,7 @@
     while (accuracy && l) { l--; mask |= 1 << l; accuracy--; }
     return 1 / (s & mask);
   }
+
+  //init on document ready
+  $(document).ready(init);
+})();
