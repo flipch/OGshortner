@@ -27,34 +27,39 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
- var Storage = multer.diskStorage({
-     destination: function(req, file, callback) {
-         callback(null, path.join(__dirname, 'uploads', file));
-     },
-     filename: function(req, file, callback) {
-         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-     }
- });
+var Storage = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, path.join(__dirname, 'uploads', file));
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+  }
+});
 
- var upload = multer({
-     storage: Storage
- });
+var upload = multer({
+  storage: Storage
+}).single('pic');
 
 //tell express what to do when the route is requested
-app.post('/fbshare', upload.single('pic'), function(req, res, next){
-  //debugging output for the terminal
+app.post('/fbshare', function (req, res, next) {
+  upload(req, res, function (err) {
+    if (err) {
+      return res.end("Something went wrong!");
+    }
+    return res.end("File uploaded sucessfully!.");
+  });
   console.log('you posted: Link: ' + req.body.link + ', Title: ' + req.body.title);
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
