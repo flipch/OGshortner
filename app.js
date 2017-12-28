@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer = require('multer');
+var shortid = require('shortid');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -25,10 +27,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 
+ var Storage = multer.diskStorage({
+     destination: function(req, file, callback) {
+         callback(null, path.join(__dirname, 'uploads', file));
+     },
+     filename: function(req, file, callback) {
+         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+     }
+ });
+
+ var upload = multer({
+     storage: Storage
+ });
+
 //tell express what to do when the route is requested
-app.post('/fbshare', function(req, res){
+app.post('/fbshare', upload.single('pic'), function(req, res, next){
   //debugging output for the terminal
-  console.log('you posted: First Name: ' + req.body.link + ', Last Name: ' + req.body.title);
+  console.log('you posted: Link: ' + req.body.link + ', Title: ' + req.body.title);
 });
 
 // catch 404 and forward to error handler

@@ -45,16 +45,14 @@ function submitButtonHandler(evt) {
   evt.preventDefault();
   evt.stopPropagation();
 
-  //make the AJAX call
-  $.ajax({
-    url: '/form',
-    type: 'POST',
-    data: {
-      link: testForm.link.value,
-      title: testForm.title.value
-    },
-    success: postSuccessHandler
-  });
+  var formD = new FormData(testForm);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "/fbshare", true);
+  xhr.onloadend = function(e) {
+    xhr.responseText;
+  }
+  xhr.send(formD);
 }
 
 function postSuccessHandler(jsonData) {
