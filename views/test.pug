@@ -8,26 +8,21 @@ html(lang='en')
     // Bootstrap CSS 
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb', crossorigin='anonymous')
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
   body
     // Optional JavaScript 
     // jQuery first, then Popper.js, then Bootstrap JS 
     script(src='https://code.jquery.com/jquery-3.2.1.slim.min.js', integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN', crossorigin='anonymous')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
-    .container-fluid
-    // The video
     video#myVideo(autoplay='', muted='', loop='')
-    source(src='rain.mp4', type='video/mp4')
+          source(src='/videos/alive.mp4', type='video/mp4')
+    .container-fluid
       .row
         .col
-        .col
+        .col#main
           h1(style='text-align:center') Open Graph Link Editor
           hr.col-md-12
-        .col
-      .row
-        .col
-        .col
           form.form-horizontal#usrform(method='POST', enctype='multipart/form-data')
             .form-group
               label.col-xs-2(for='link') Original link
@@ -52,7 +47,7 @@ html(lang='en')
               button.btn.btn-primary(type='button', onclick='submit()') Submit
               button.btn.btn-danger(type='reset', onclick='alsoClearImage()') Reset
             .col-xs-12(style='padding-top:5px')
-              .progress
+              .progress(style='height:20px')
                 .progress-bar.progress-bar-striped.progress-bar-animated.bg-success(style='text-align:center; width:0%')
         .col
     script(src="/javascripts/util.js")
