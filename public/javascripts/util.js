@@ -1,95 +1,4 @@
-<!doctype html>
-<html lang="en">
 
-<head>
-  <title>Open Graph Link Editor</title>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
-    crossorigin="anonymous">
-
-  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
-</head>
-
-<body>
-
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-    crossorigin="anonymous"></script>
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col">
-      </div>
-      <div class="col">
-        <h1 style="text-align:center">Open Graph Link Editor</h1>
-        <hr class="col-md-12">
-      </div>
-
-      <div class="col">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-      </div>
-
-      <div class="col">
-
-        <form class="form-horizontal" id="usrform" method="POST" enctype="multipart/form-data">
-          <div class="form-group">
-
-            <label for="link" class="col-xs-2">Original link</label>
-            <div class="col-xs-10">
-              <input type="text" class="form-control" name="link" id="link" aria-describedby="helpLink" placeholder="www.google.com">
-              <small id="helpLink" class="form-text text-muted">Type your source Link</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="title">Link's Title</label>
-            <input type="text" class="form-control" name="title" id="title" aria-describedby="helpId" placeholder="Your title here">
-            <small id="helpTitle" class="form-text text-muted">Type your desired Title</small>
-          </div>
-          <div class="form-group">
-            <label for="descField">Link's Description</label>
-            <textarea type="text" class="form-control" name="desc" id="desc" placeholder="Your Description goes here"></textarea>
-            <small id="helpDescription" class="form-text text-muted">Type your desired Description</small>
-          </div>
-          <div class="form-group">
-            <label class="custom-file">
-              <input type="file" id="file" name="pic" class="custom-file-input">
-              <span class="custom-file-control" id="custom-file-control"></span>
-            </label>
-            <small id="fileHelpId" class="form-text text-muted">Pick an image no bigger than 9 Mb. Images whose size are bigger than 9mb will be resized and/or compressed.</small>
-            <img id="image-preview" src="#" alt="Preview" onerror="onError(this);" />
-          </div>
-          <div class="col-xs-12">
-            <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
-            <button type="reset" class="btn btn-danger" onclick="alsoClearImage()">Reset</button>
-          </div>
-          <div class="col-xs-12" style="padding-top:5px">
-            <div class="progress">
-              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="text-align:center; width:0%"></div>
-            </div>
-          </div>
-
-        </form>
-      </div>
-
-      <div class="col">
-      </div>
-    </div>
-  </div>
-  </div>
-</body>
-<script>
   var shouldUpload = false;
   var compressed;
   function readURL(input) {
@@ -163,9 +72,6 @@
       });
     }
   }
-</script>
-
-<script>
 
   // scales the image by (float) scale < 1
   // returns a canvas containing the scaled image.
@@ -324,16 +230,3 @@
     while (accuracy && l) { l--; mask |= 1 << l; accuracy--; }
     return 1 / (s & mask);
   }
-</script>
-
-<style>
-  #custom-file-control:lang(en)::after {
-    content: "Choose Image...";
-  }
-
-  #custom-file-control:lang(en)::before {
-    content: "Browse";
-  }
-</style>
-
-</html>
