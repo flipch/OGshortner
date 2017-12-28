@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <title>Open Graph Link Editor</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+    crossorigin="anonymous"></script>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+      </div>
+      <div class="col">
+        <h1 style="text-align:center">Open Graph Link Editor</h1>
+        <hr class="col-md-12">
+      </div>
+
+      <div class="col">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+      </div>
+
+      <div class="col">
+
+        <form class="form-horizontal" id="usrform" method="POST" enctype="multipart/form-data">
+          <div class="form-group">
+
+            <label for="link" class="col-xs-2">Original link</label>
+            <div class="col-xs-10">
+              <input type="text" class="form-control" name="link" id="link" aria-describedby="helpLink" placeholder="www.google.com">
+              <small id="helpLink" class="form-text text-muted">Type your source Link</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title">Link's Title</label>
+            <input type="text" class="form-control" name="title" id="title" aria-describedby="helpId" placeholder="Your title here">
+            <small id="helpTitle" class="form-text text-muted">Type your desired Title</small>
+          </div>
+          <div class="form-group">
+            <label for="descField">Link's Description</label>
+            <textarea type="text" class="form-control" name="desc" id="desc" placeholder="Your Description goes here"></textarea>
+            <small id="helpDescription" class="form-text text-muted">Type your desired Description</small>
+          </div>
+          <div class="form-group">
+            <label class="custom-file">
+              <input type="file" id="file" name="pic" class="custom-file-input">
+              <span class="custom-file-control" id="custom-file-control"></span>
+            </label>
+            <small id="fileHelpId" class="form-text text-muted">Pick an image no bigger than 9 Mb. Images whose size are bigger than 9mb will be resized and/or compressed.</small>
+            <img id="image-preview" src="#" alt="Preview" onerror="onError(this);" />
+          </div>
+          <div class="col-xs-12">
+            <button type="button" class="btn btn-primary" onclick="submit()">Submit</button>
+            <button type="reset" class="btn btn-danger" onclick="alsoClearImage()">Reset</button>
+          </div>
+          <div class="col-xs-12" style="padding-top:5px">
+            <div class="progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="text-align:center; width:0%"></div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="col">
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+<script>
+  var shouldUpload = false;
+  var compressed;
+  function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.readAsDataURL(input.files[0]);
+
+      reader.onload = function (e) {
+        var check = false;
+        var image = new Image();
+
+        image.src = e.target.result;
+        image.onload = function () {
+          check = e.total < 9000000; // Size restriction
+          var height = this.height; // Resolution restriction
+          var width = this.width;
+          compressed = e.target.result;
+
+          if (width > 1280 || height > 720) {
+            alert("resize");
+            compressed = downScaleImage(image, 0.50);
+          }
+
+          if (check) {
+            $('#image-preview').show();
+            $('#image-preview').attr('src', compressed);
+            shouldUpload = true;
+          } else {
+            alert("Image is too big!");
+          }
+        }
+      }
+    }
+  }
+
+  $("#file").change(function () {
+    readURL(this);
+  });
+
+  function onError(img) {
+    delete img.onerror;
+    // Change the url
+    //img.src = 'images/noload.jpg';
+
+    // or just hide it (jQuery)
+    jQuery(img).hide();
+  }
+  function alsoClearImage() {
+    $('#image-preview').attr('src', '');
+    shouldUpload = false;
+  }
+
+  function submit() {
+    if (shouldUpload) {
+      var formData = new FormData();
+      formData.append('link', $('#link').val());
+      formData.append('title', $('#title').val());
+      formData.append('desc', $('#desc').val());
+      formData.append('pic', compressed, 'picture.jpg');
+      console.log(formData.keys());
+      alert("hi");
+      $.ajax({
+        type: 'POST',
+        url: '/fbshare',
+        data: formData, // data to be submitted
+        dataType: 'json',
+        success: function (response) {
+          alert(response); // do what you like with the response
+          console.log('upload successful!\n' + data);
+        }
+      });
+    }
+  }
+</script>
+
+<script>
+
+  // scales the image by (float) scale < 1
+  // returns a canvas containing the scaled image.
+  function downScaleImage(img, scale) {
+    var imgCV = document.createElement('canvas');
+    imgCV.width = img.width;
+    imgCV.height = img.height;
+    var imgCtx = imgCV.getContext('2d');
+    imgCtx.drawImage(img, 0, 0);
+    return downScaleCanvas(imgCV, scale).toDataURL("image/png");
+  }
+
+  // scales the canvas by (float) scale < 1
+  // returns a new canvas containing the scaled image.
+  function downScaleCanvas(cv, scale) {
+    if (!(scale < 1) || !(scale > 0)) throw ('scale must be a positive number <1 ');
+    scale = normaliseScale(scale);
+    var sqScale = scale * scale; // square scale =  area of a source pixel within target
+    var sw = cv.width; // source image width
+    var sh = cv.height; // source image height
+    var tw = Math.floor(sw * scale); // target image width
+    var th = Math.floor(sh * scale); // target image height
+    var sx = 0, sy = 0, sIndex = 0; // source x,y, index within source array
+    var tx = 0, ty = 0, yIndex = 0, tIndex = 0; // target x,y, x,y index within target array
+    var tX = 0, tY = 0; // rounded tx, ty
+    var w = 0, nw = 0, wx = 0, nwx = 0, wy = 0, nwy = 0; // weight / next weight x / y
+    // weight is weight of current source point within target.
+    // next weight is weight of current source point within next target's point.
+    var crossX = false; // does scaled px cross its current px right border ?
+    var crossY = false; // does scaled px cross its current px bottom border ?
+    var sBuffer = cv.getContext('2d').
+      getImageData(0, 0, sw, sh).data; // source buffer 8 bit rgba
+    var tBuffer = new Float32Array(3 * tw * th); // target buffer Float32 rgb
+    var sR = 0, sG = 0, sB = 0; // source's current point r,g,b
+
+    for (sy = 0; sy < sh; sy++) {
+      ty = sy * scale; // y src position within target
+      tY = 0 | ty;     // rounded : target pixel's y
+      yIndex = 3 * tY * tw;  // line index within target array
+      crossY = (tY !== (0 | (ty + scale)));
+      if (crossY) { // if pixel is crossing botton target pixel
+        wy = (tY + 1 - ty); // weight of point within target pixel
+        nwy = (ty + scale - tY - 1); // ... within y+1 target pixel
+      }
+      for (sx = 0; sx < sw; sx++ , sIndex += 4) {
+        tx = sx * scale; // x src position within target
+        tX = 0 | tx;    // rounded : target pixel's x
+        tIndex = yIndex + tX * 3; // target pixel index within target array
+        crossX = (tX !== (0 | (tx + scale)));
+        if (crossX) { // if pixel is crossing target pixel's right
+          wx = (tX + 1 - tx); // weight of point within target pixel
+          nwx = (tx + scale - tX - 1); // ... within x+1 target pixel
+        }
+        sR = sBuffer[sIndex];   // retrieving r,g,b for curr src px.
+        sG = sBuffer[sIndex + 1];
+        sB = sBuffer[sIndex + 2];
+        if (!crossX && !crossY) { // pixel does not cross
+          // just add components weighted by squared scale.
+          tBuffer[tIndex] += sR * sqScale;
+          tBuffer[tIndex + 1] += sG * sqScale;
+          tBuffer[tIndex + 2] += sB * sqScale;
+        } else if (crossX && !crossY) { // cross on X only
+          w = wx * scale;
+          // add weighted component for current px
+          tBuffer[tIndex] += sR * w;
+          tBuffer[tIndex + 1] += sG * w;
+          tBuffer[tIndex + 2] += sB * w;
+          // add weighted component for next (tX+1) px                
+          nw = nwx * scale
+          tBuffer[tIndex + 3] += sR * nw;
+          tBuffer[tIndex + 4] += sG * nw;
+          tBuffer[tIndex + 5] += sB * nw;
+        } else if (!crossX && crossY) { // cross on Y only
+          w = wy * scale;
+          // add weighted component for current px
+          tBuffer[tIndex] += sR * w;
+          tBuffer[tIndex + 1] += sG * w;
+          tBuffer[tIndex + 2] += sB * w;
+          // add weighted component for next (tY+1) px                
+          nw = nwy * scale
+          tBuffer[tIndex + 3 * tw] += sR * nw;
+          tBuffer[tIndex + 3 * tw + 1] += sG * nw;
+          tBuffer[tIndex + 3 * tw + 2] += sB * nw;
+        } else { // crosses both x and y : four target points involved
+          // add weighted component for current px
+          w = wx * wy;
+          tBuffer[tIndex] += sR * w;
+          tBuffer[tIndex + 1] += sG * w;
+          tBuffer[tIndex + 2] += sB * w;
+          // for tX + 1; tY px
+          nw = nwx * wy;
+          tBuffer[tIndex + 3] += sR * nw;
+          tBuffer[tIndex + 4] += sG * nw;
+          tBuffer[tIndex + 5] += sB * nw;
+          // for tX ; tY + 1 px
+          nw = wx * nwy;
+          tBuffer[tIndex + 3 * tw] += sR * nw;
+          tBuffer[tIndex + 3 * tw + 1] += sG * nw;
+          tBuffer[tIndex + 3 * tw + 2] += sB * nw;
+          // for tX + 1 ; tY +1 px
+          nw = nwx * nwy;
+          tBuffer[tIndex + 3 * tw + 3] += sR * nw;
+          tBuffer[tIndex + 3 * tw + 4] += sG * nw;
+          tBuffer[tIndex + 3 * tw + 5] += sB * nw;
+        }
+      } // end for sx 
+    } // end for sy
+
+    // create result canvas
+    var resCV = document.createElement('canvas');
+    resCV.width = tw;
+    resCV.height = th;
+    var resCtx = resCV.getContext('2d');
+    var imgRes = resCtx.getImageData(0, 0, tw, th);
+    var tByteBuffer = imgRes.data;
+    // convert float32 array into a UInt8Clamped Array
+    var pxIndex = 0; //  
+    for (sIndex = 0, tIndex = 0; pxIndex < tw * th; sIndex += 3, tIndex += 4, pxIndex++) {
+      tByteBuffer[tIndex] = 0 | (tBuffer[sIndex]);
+      tByteBuffer[tIndex + 1] = 0 | (tBuffer[sIndex + 1]);
+      tByteBuffer[tIndex + 2] = 0 | (tBuffer[sIndex + 2]);
+      tByteBuffer[tIndex + 3] = 255;
+    }
+    // writing result to canvas.
+    resCtx.putImageData(imgRes, 0, 0);
+    return resCV;
+  }
+
+  function polyFillPerfNow() {
+    window.performance = window.performance ? window.performance : {};
+    window.performance.now = window.performance.now || window.performance.webkitNow || window.performance.msNow ||
+      window.performance.mozNow || Date.now;
+  };
+
+  function log2(v) {
+    // taken from http://graphics.stanford.edu/~seander/bithacks.html
+    var b = [0x2, 0xC, 0xF0, 0xFF00, 0xFFFF0000];
+    var S = [1, 2, 4, 8, 16];
+    var i = 0, r = 0;
+
+    for (i = 4; i >= 0; i--) {
+      if (v & b[i]) {
+        v >>= S[i];
+        r |= S[i];
+      }
+    }
+    return r;
+  }
+  // normalize a scale <1 to avoid some rounding issue with js numbers
+  function normaliseScale(s) {
+    if (s > 1) throw ('s must be <1');
+    s = 0 | (1 / s);
+    var l = log2(s);
+    var mask = 1 << l;
+    var accuracy = 4;
+    while (accuracy && l) { l--; mask |= 1 << l; accuracy--; }
+    return 1 / (s & mask);
+  }
+</script>
+
+<style>
+  #custom-file-control:lang(en)::after {
+    content: "Choose Image...";
+  }
+
+  #custom-file-control:lang(en)::before {
+    content: "Browse";
+  }
+</style>
+
+</html>
