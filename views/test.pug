@@ -22,6 +22,7 @@ html(lang='en')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
     script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
     script(src="/javascripts/clipboard.min.js")
+    script(src="/javascripts/image-compressor.min.js")
     video#myVideo(autoplay='', muted='', loop='')
           source(src='/videos/alive.mp4', type='video/mp4')
     .container-fluid
@@ -46,10 +47,19 @@ html(lang='en')
               small#helpDescription.form-text.text-muted Type your desired Description
             .form-group
               label.custom-file
-                input#file.custom-file-input(type='file', name='pic')
+                input#file.custom-file-input(type='file', name='pic', accept='image/*')
                 span.custom-file-control#custom-file-control
               small#fileHelpId.form-text.text-muted Pick an image no bigger than 5 Mb. Images whose size are bigger than 5mb will be resized and/or compressed.
               img#image-preview.img-thumbnail(src='#', alt='Preview', onerror='onError(this);')
+              .col-xs-12(style='text-align: center;')
+                svg.spinner#loading(style='display: none;', viewbox='0 0 66 66', xmlns='http://www.w3.org/2000/svg')
+                  circle.path(fill='transparent', stroke-width='2', cx='33', cy='33', r='30', stroke='url(#gradient)')
+                  lineargradient#gradient
+                    stop(offset='50%', stop-color='#42d179', stop-opacity='1')
+                    stop(offset='65%', stop-color='#42d179', stop-opacity='.5')
+                    stop(offset='100%', stop-color='#42d179', stop-opacity='0')
+                  svg.spinner-dot.dot(width='5px', height='5px', viewbox='0 0 66 66', xmlns='http://www.w3.org/2000/svg', x='37', y='1.5')
+                    circle.path(fill='#42d179', cx='33', cy='33', r='30')
             .col-xs-12
               button.btn.btn-primary#submitButton(type='submit') Submit
               button.btn.btn-danger#reset(type='reset', onclick='alsoClearImage()') Reset
