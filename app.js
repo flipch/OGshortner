@@ -42,7 +42,7 @@ var Storage = multer.diskStorage({
     fileContent += '<meta property="og:title" content="' + req.body.title + '" />';
     fileContent += '<meta property="og:url" content="' + req.body.link + '" />';
     fileContent += '<meta property="og:description" content="' + req.body.desc + '" />';
-    fileContent += '<meta property="og:image" content="' + req.ui + file.originalname.substring(file.originalname.indexOf('.'), file.originalname.length) + '" />';
+    fileContent += '<meta property="og:image" content=./"' + req.ui + file.originalname.substring(file.originalname.indexOf('.'), file.originalname.length) + '" />';
     fileContent += '<script>window.location = "' + req.body.link + '";</script>'
     fileContent += '</head><body><p>Please wait, you are being redirected...</p></body></html>';
 
@@ -70,7 +70,7 @@ app.post('/fbshare', function (req, res, next) {
     if (err) {
       return res.end("Something went wrong!");
     }
-    return res.send("File uploaded sucessfully!.\nYour id is " + req.ui);
+    return res.send(req.ui);
   });
 });
 

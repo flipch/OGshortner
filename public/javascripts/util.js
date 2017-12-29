@@ -34,8 +34,17 @@ function readURL(input) {
   }
 }
 
+function copyC() {
+  var copyText = document.getElementById("copy");
+  copyText.select();
+  document.execCommand("Copy");
+  alert("Copied the text: " + copyText.value);
+}
+
 function init() {
   $('#submitButton').click(submitButtonHandler);
+  new Clipboard('#copy-button');
+  $('#end').click(function(){location.reload()});
 }
 
 function submitButtonHandler(evt) {
@@ -49,8 +58,18 @@ function submitButtonHandler(evt) {
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/fbshare", true);
-  xhr.onloadend = function(e) {
-    xhr.responseText;
+  xhr.upload.addEventListener("progress", function (evt) {
+    if (evt.lengthComputable) {
+    var percentComplete = (evt.loaded / evt.total) * 100;
+    $('div.progress > div.progress-bar').css({ "width": percentComplete + "%" });
+  } }, false);
+ 
+  xhr.onload = function(e) {
+    let modal = $('#myModal');
+    $('#modalB').append("<br>");
+    $('#modalB').append("<a href='http://www.felipech.com/og/" + xhr.responseText+ "'id='copy'>http://www.felipech.com/og/"+xhr.responseText+"</a>");
+    modal.modal('toggle');
+    $('#reset').click();
   }
   xhr.send(formD);
 }
