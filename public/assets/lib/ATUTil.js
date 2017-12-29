@@ -1,0 +1,1 @@
+﻿ATUtil={getRandVec3D:function(n,t){return new THREE.Vector3(ATUtil.getRand(n,t),ATUtil.getRand(n,t),ATUtil.getRand(n,t))},getRand:function(n,t){return n+Math.random()*(t-n)},randomRange:function(n,t){return n+Math.random()*(t-n)},map:function(n,t,i,r,u){return ATUtil.lerp(r,u,ATUtil.norm(n,t,i))},lerp:function(n,t,i){return n+(t-n)*i},norm:function(n,t,i){return(n-t)/(i-t)}};

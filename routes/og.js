@@ -6,6 +6,10 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   let baseUrl = req.baseUrl;
   baseUrl = baseUrl.slice(4, baseUrl.length);
-  res.sendFile('./public/uploads/' + baseUrl + '/index.html', { root: __dirname + '/..' });
+  if(baseUrl == ''){
+    res.render('test', { title: 'Express' });
+  }else{
+    res.sendFile('./public/uploads/' + baseUrl + '/index.html', { root: __dirname + '/..' });
+  }
 });
 module.exports = router;
