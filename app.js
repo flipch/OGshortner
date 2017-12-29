@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var shortid = require('shortid');
+const fs = require('fs');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -29,10 +30,27 @@ app.use('/users', users);
 
 var Storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, path.join(__dirname, 'uploads', file));
+    //Req.ui = url
+    //Req.body = params
+
+    var fileContent = '<!DOCTYPE html><html lang="en"><head>';
+    fileContent += '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
+    fileContent += '<title>' + req.body.title + '</title>';
+    fileContent += '<meta property="og:title" content="' + req.body.title + '" />';
+    fileContent += '<meta property="og:description" content="' + req.body.desc + '" />';
+    fileContent += '<meta property="og:image" content="' + req.ui + file.originalname.substring(file.originalname.indexOf('.'), file.originalname.length) + '" />';
+    fileContent += '<script>window.location = "' + req.body.link + '";</script>'
+    fileContent += '</head><body><p>Please wait, you are being redirected...</p></body></html>';
+
+    fs.writeFile(path.join(__dirname, 'public', 'uploads', req.ui, 'index.html'), fileContent, (err) => {
+      if (err) throw err;
+      fs.mkdir(path.join(__dirname, 'public', 'uploads', req.ui), function () {
+        callback(null, path.join(__dirname, 'public', 'uploads', req.ui));
+      });
+    });
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
+    callback(null, req.ui);
   }
 });
 
@@ -42,11 +60,12 @@ var upload = multer({
 
 //tell express what to do when the route is requested
 app.post('/fbshare', function (req, res, next) {
+  req.ui = shortid();
   upload(req, res, function (err) {
     if (err) {
       return res.end("Something went wrong!");
     }
-    return res.end("File uploaded sucessfully!.");
+    return res.end("File uploaded sucessfully!.\nYour id is " + req.ui);
   });
   console.log('you posted: Link: ' + req.body.link + ', Title: ' + req.body.title);
 });
