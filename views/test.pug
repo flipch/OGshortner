@@ -48,8 +48,8 @@ html(lang='en')
               label.custom-file
                 input#file.custom-file-input(type='file', name='pic')
                 span.custom-file-control#custom-file-control
-              small#fileHelpId.form-text.text-muted Pick an image no bigger than 9 Mb. Images whose size are bigger than 9mb will be resized and/or compressed.
-              img#image-preview(src='#', alt='Preview', onerror='onError(this);')
+              small#fileHelpId.form-text.text-muted Pick an image no bigger than 5 Mb. Images whose size are bigger than 5mb will be resized and/or compressed.
+              img#image-preview.img-thumbnail(src='#', alt='Preview', onerror='onError(this);')
             .col-xs-12
               button.btn.btn-primary#submitButton(type='submit') Submit
               button.btn.btn-danger#reset(type='reset', onclick='alsoClearImage()') Reset
@@ -66,7 +66,7 @@ html(lang='en')
                 button.close(type='button', data-dismiss='modal', aria-label='Close')
                   span(aria-hidden='true') ×
               .modal-body#modalB
-                | Here's your link, keep it safe! It's valid for 30 days.We can't show you this again.
+                | Here's your link, keep it safe! It's free so it's only valid for 30 days.We can't show you this again.
               .modal-footer
                 button.btn.btn-secondary#copy-button(type='button', data-clipboard-target="#copy") Copy
                 button.btn.btn-primary#end(type='button', data-dismiss='modal') I copied the link already

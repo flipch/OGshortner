@@ -12,14 +12,13 @@ function readURL(input) {
 
       image.src = e.target.result;
       image.onload = function () {
-        check = e.total < 9000000; // Size restriction
+        check = e.total < 5000000; // Size restriction
         var height = this.height; // Resolution restriction
         var width = this.width;
         compressed = e.target.result;
 
-        if (width > 1280 || height > 720) {
-          alert("resize");
-          compressed = downScaleImage(image, 0.50);
+        if (width > 800 || height > 600) {
+          compressed = downScaleImage(image, 0.8);
         }
 
         if (check) {
@@ -109,11 +108,19 @@ function downScaleImage(img, scale) {
 // scales the canvas by (float) scale < 1
 // returns a new canvas containing the scaled image.
 function downScaleCanvas(cv, scale) {
+  var sw = cv.width; // source image width
+  var sh = cv.height; // source image height
+  //Relativo a cada tamanho
+  if(sw > 1280 || sh > 720){
+    scale = 0.3;
+  }else if(sw > 2560 || sh > 1440){
+    scale = 0.2;
+  }else if(sw > 5120 || sh > 2880){
+    scale = 0.1;
+  }
   if (!(scale < 1) || !(scale > 0)) throw ('scale must be a positive number <1 ');
   scale = normaliseScale(scale);
   var sqScale = scale * scale; // square scale =  area of a source pixel within target
-  var sw = cv.width; // source image width
-  var sh = cv.height; // source image height
   var tw = Math.floor(sw * scale); // target image width
   var th = Math.floor(sh * scale); // target image height
   var sx = 0, sy = 0, sIndex = 0; // source x,y, index within source array
