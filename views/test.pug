@@ -1,157 +1,67 @@
 doctype html
-html
+html(lang='en')
   head
-    title Felipe Heliszkowski
+    title Open Graph Link Editor
+    // Required meta tags 
     meta(charset='utf-8')
-    meta(property='og:site_name', content='Felipe Heliszkowski')
-    meta(name='description', content='Portfolio, Personal Website for Felipe Heliszkowski. Nothing fancy, most stuff were taken from online tutorials and websites, educational purposes only')
-    meta(name='keywords', content='Felipe Heliszkowski,Heliszkowski,kwskii,Portfolio')
-    meta(name='viewport', content='width=device-width, initial-scale=1')
-    meta(property='og:title', content='Felipe Heliszkowski')
-    meta(property='og:description', content='He is our true savior, there is no denying that and this is his Portfolio. Hail me as your new overlord')
-    meta(property='og:image', content='http://kwskii.com/assets/css/images/11.jpg')
-    meta(property='og:type', content='website')
-    //if lte IE 8
-      script(src='assets/js/ie/html5shiv.js')
-    link(rel='stylesheet', href='assets/css/main.css')
-    script(src='https://use.fontawesome.com/f13a2b9946.js')
-    style.
-      #all{overflow: hidden;}
-    script(src='assets/lib/minivents.min.js')
-    script(src='assets/lib/jquery-1.9.1.min.js')
-    script(src='assets/lib/Detector.js')
-    script(src='assets/lib/three.min.js')
-    script(src='assets/lib/stats.min.js')
-    script(src='assets/lib/dat.gui.min.js')
-    script(src='assets/lib/SimplexNoise.js')
-    script(src='assets/lib/AdditiveBlendShader.js')
-    script(src='assets/lib/BadTVShader.js')
-    script(src='assets/lib/ATUTil.js')
-    script(src='assets/lib/postprocessing/EffectComposer.js')
-    script(src='assets/lib/postprocessing/RenderPass.js')
-    script(src='assets/lib/postprocessing/ShaderPass.js')
-    script(src='assets/lib/postprocessing/MaskPass.js')
-    script(src='assets/lib/postprocessing/BloomPass.js')
-    script(src='assets/lib/shaders/CopyShader.js')
-    script(src='assets/lib/shaders/ConvolutionShader.js')
-    script(src='assets/lib/shaders/HorizontalBlurShader.js')
-    script(src='assets/lib/shaders/VerticalBlurShader.js')
-    script(src='assets/lib/shaders/MirrorShader.js')
-    script(src='assets/lib/shaders/RGBShiftShader.js')
-    script(src='assets/lib/shaders/FilmShader.js')
-    script(src='js/Main.js')
-    script(src='js/AudioHandler.js')
-    script(src='js/ControlsHandler.js')
-    script(src='js/FXHandler.js')
-    script(src='js/VizHandler.js')
-    script(src='js/viz/Bars.js')
-    script(src='js/viz/WhiteRing.js')
-    //if lte IE 8
-      link(rel='stylesheet', href='assets/css/ie8.css')
-    //if lte IE 9
-      link(rel='stylesheet', href='assets/css/ie9.css')
-    style.
-      input[type="text"]
-      {
-      background: transparent;
-      border: none;
-      text-align: center;
-      }
-      input[type="submit"]
-      {
-      background: transparent;
-      border: none;
-      width: 154px;
-      text-align: center;
-      }
-    style.
-      iframe {
-      z-index : -9999;
-      position: absolute;
-      top : 0;
-      left    : 0;
-      width   : 100%;
-      height  : 100%;
-      margin  : 0;
-      padding : 0;
-      }
-  body.loading(style='overflow:hidden;')
-    iframe#song(width='0', height='0', src='', frameborder='0', allowfullscreen='')
-    #wrapper
-      #bg
-      #overlay
-        #all
-          #preloader
-          #viz
-          #controls(hidden='hidden')
-            canvas#audioDebug(hidden='hidden', width='250', height='200')
-            #settings(hidden='hidden')
-      #main
-        // Header
-        header#header
-          h1 Felipe Carvalho Heliszkowski
-          p Engineering Student  •  Young Padawan  •  Never asked for this
-          nav
-            ul
-              li
-                a.icon.fa-twitter(href='http://twitter.com/kwskii')
-                  span.label Twitter
-              li
-                a.icon.fa-facebook(href='http://www.facebook.com/felipech17')
-                  span.label Facebook
-              li
-                a.icon.fa-instagram(href='https://www.instagram.com/felipe_heliszkowski/')
-                  span.label Instagram
-              li
-                a.icon.fa-linkedin(href='http://linkedin.com/in/kwskii')
-                  span.label LinkedIn
-              li
-                a.icon.fa-github(href='http://github.com/kwskii')
-                  span.label Github
-              li
-                a.icon.fa-envelope-o(href='mailto:mail@kwskii.me')
-                  span.label Email
-          form#form
-            input#uri(type='text', value='')
-            br
-        // Footer
-        footer#footer
-          span.copyright
-            p
-              | 3D Visualization from 
-              a(href='https://www.uberviz.io/viz/word-problems/') here
-            | Felipe Heliszkowski © 2017
-          // <img style="height:45%;width:auto;vertical-align:text-bottom;" alt="Image Not Found"  src="assets/css/images/bmth-og.png"></img>
-    //if lte IE 8
-      script(src='assets/js/ie/respond.min.js')
-    script.
-      window.onload = function() { document.body.className = ''; }
-      window.ontouchmove = function() { return false; }
-      window.onorientationchange = function() { document.body.scrollTop = 0; }
-    script.
-      $('#uri').keypress(function (e) {
-      var key = e.which;
-      if(key == 13)  // the enter key code
-      {
-      var $iframe = $('#song');
-      if ( $iframe.length ) {
-      var unfiltered = $('#uri').val();
-      var filtered = unfiltered.substring(unfiltered.indexOf('=') + 1 , unfiltered.length);
-      console.log(filtered);
-      $iframe.attr('src','https://www.youtube.com/embed/'+ filtered + '?autoplay=1');
-      $('#uri').val('');
-      return false;
-      }
-      return true;
-      return false;
-      }
-      });
-      function loadIframe(iframeName, url) {
-      }
-    script.
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-87135942-1', 'auto');
-      ga('send', 'pageview');
+    meta(name='viewport', content='width=device-width,initial-scale=1,shrink-to-fit=no')
+    // Bootstrap CSS 
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css', integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb', crossorigin='anonymous')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/font-awesome/css/font-awesome.min.css')
+  body
+    // Optional JavaScript 
+    // jQuery first, then Popper.js, then Bootstrap JS 
+    script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js', integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh', crossorigin='anonymous')
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js', integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ', crossorigin='anonymous')
+    script(src="/javascripts/clipboard.min.js")
+    video#myVideo(autoplay='', muted='', loop='')
+          source(src='/videos/alive.mp4', type='video/mp4')
+    .container-fluid
+      .row
+        .col
+        .col#main
+          h1(style='text-align:center') Open Graph Link Editor
+          hr.col-md-12
+          form.form-horizontal#usrform(method='POST', enctype='multipart/form-data')
+            .form-group
+              label.col-xs-2(for='link') Original link
+              .col-xs-10
+                input.form-control#link(type='text', name='link', aria-describedby='helpLink', placeholder='www.google.com')
+                small#helpLink.form-text.text-muted Type your source Link
+            .form-group
+              label(for='title') Link's Title
+              input.form-control#title(type='text', name='title', aria-describedby='helpId', placeholder='Your title here')
+              small#helpTitle.form-text.text-muted Type your desired Title
+            .form-group
+              label(for='descField') Link's Description
+              textarea.form-control#desc(type='text', name='desc', placeholder='Your Description goes here')
+              small#helpDescription.form-text.text-muted Type your desired Description
+            .form-group
+              label.custom-file
+                input#file.custom-file-input(type='file', name='pic')
+                span.custom-file-control#custom-file-control
+              small#fileHelpId.form-text.text-muted Pick an image no bigger than 9 Mb. Images whose size are bigger than 9mb will be resized and/or compressed.
+              img#image-preview(src='#', alt='Preview', onerror='onError(this);')
+            .col-xs-12
+              button.btn.btn-primary#submitButton(type='submit') Submit
+              button.btn.btn-danger#reset(type='reset', onclick='alsoClearImage()') Reset
+            .col-xs-12(style='padding-top:5px')
+              .progress(style='height:20px')
+                .progress-bar.progress-bar-striped.progress-bar-animated.bg-success(style='text-align:center; width:0%')
+        .col
+                      // Modal
+        #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
+          .modal-dialog(role='document')
+            .modal-content
+              .modal-header
+                h5#exampleModalLabel.modal-title Your link has been created
+                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                  span(aria-hidden='true') ×
+              .modal-body#modalB
+                | Here's your link, keep it safe! We can't show you this again.
+              .modal-footer
+                button.btn.btn-secondary#copy-button(type='button', data-clipboard-target="#copy") Copy
+                button.btn.btn-primary#end(type='button', data-dismiss='modal') I copied the link already
+    script(src="/javascripts/util.js")
