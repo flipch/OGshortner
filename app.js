@@ -41,7 +41,7 @@ var Storage = multer.diskStorage({
     fileContent += '<title>' + req.body.title + '</title>';
     fileContent += '<meta property="og:title" content="' + req.body.title + '" />';
     fileContent += '<meta property="og:description" content="' + req.body.desc + '" />';
-    fileContent += '<meta property="og:image" content="./uploads/' + req.ui + "/" + req.ui + file.originalname.substring(file.originalname.indexOf('.'), file.originalname.length) + '" />';
+    fileContent += '<meta property="og:image" content="./uploads/' + req.ui + "/" + req.ui + '.' + file.mimetype.slice(file.mimetype.indexOf('/')+1,file.mimetype.length) + '" />';
     fileContent += '<script>window.location = "' + req.body.link + '";</script>'
     fileContent += '</head><body><p>Please wait, you are being redirected...</p></body></html>';
 
@@ -54,7 +54,7 @@ var Storage = multer.diskStorage({
     });
   },
   filename: function (req, file, callback) {
-    callback(null, req.ui + file.originalname.substring(file.originalname.indexOf('.'), file.originalname.length));
+    callback(null, req.ui + '.' + file.mimetype.slice(file.mimetype.indexOf('/')+1,file.mimetype.length));
   }
 });
 

@@ -16,9 +16,10 @@ document.getElementById('file').addEventListener('change', (e) => {
     quality: .6,
     success(result) {
       var reader = new window.FileReader();
+      compressed = result;
       reader.readAsDataURL(result);
       reader.onloadend = function () {
-        compressed = reader.result
+
         loading.hide();
         $('#image-preview').attr('src', reader.result);
         $('#image-preview').show();
@@ -60,7 +61,10 @@ function submitButtonHandler(evt) {
   xhr.upload.addEventListener("progress", function (evt) {
     if (evt.lengthComputable) {
       var percentComplete = (evt.loaded / evt.total) * 100;
-      $('div.progress > div.progress-bar').text(percentComplete + "/100");
+      if (percentComplete == 100)
+        $('div.progress > div.progress-bar').text("All done =)");
+      else
+        $('div.progress > div.progress-bar').text(percentComplete.toFixed(2) + "/100");
       $('div.progress > div.progress-bar').css({ "width": percentComplete + "%" });
     }
   }, false);

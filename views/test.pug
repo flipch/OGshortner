@@ -55,17 +55,17 @@ html(lang='en')
                 svg.spinner#loading(style='display: none;', viewbox='0 0 66 66', xmlns='http://www.w3.org/2000/svg')
                   circle.path(fill='transparent', stroke-width='2', cx='33', cy='33', r='30', stroke='url(#gradient)')
                   lineargradient#gradient
-                    stop(offset='50%', stop-color='#42d179', stop-opacity='1')
-                    stop(offset='65%', stop-color='#42d179', stop-opacity='.5')
-                    stop(offset='100%', stop-color='#42d179', stop-opacity='0')
+                    stop(offset='50%', stop-color='#007bff', stop-opacity='1')
+                    stop(offset='65%', stop-color='#007bff', stop-opacity='.5')
+                    stop(offset='100%', stop-color='#007bff', stop-opacity='0')
                   svg.spinner-dot.dot(width='5px', height='5px', viewbox='0 0 66 66', xmlns='http://www.w3.org/2000/svg', x='37', y='1.5')
-                    circle.path(fill='#42d179', cx='33', cy='33', r='30')
+                    circle.path(fill='#007bff', cx='33', cy='33', r='30')
             .col-xs-12
-              button.btn.btn-primary#submitButton(type='submit') Submit
-              button.btn.btn-danger#reset(type='reset', onclick='alsoClearImage()') Reset
+              button.btn.btn-primary.btn-block#submitButton(type='submit') Submit
+              button.btn.btn-danger.btn-block#reset(type='reset', onclick='alsoClearImage()') Reset
             .col-xs-12(style='padding-top:5px')
               .progress(style='height:20px')
-                .progress-bar.progress-bar-striped.progress-bar-animated.bg-success(style='text-align:center; width:0%')
+                .progress-bar.progress-bar-striped.progress-bar-animated.bg-success#pb(style='text-align:center; width:0%')
         .col
                       // Modal
         #myModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel', aria-hidden='true')
