@@ -13,7 +13,10 @@ document.getElementById('file').addEventListener('change', (e) => {
   loading.show();
 
   new ImageCompressor(file, {
-    quality: .6,
+    quality: .7,
+    maxWidth: 800,
+    maxHeight: 800,
+    convertSize: 5000000,
     success(result) {
       var reader = new window.FileReader();
       compressed = result;
@@ -46,6 +49,30 @@ function init() {
   $('#end').click(function () { location.reload() });
 }
 
+function urlExists(url) {
+        var request = false;
+        if (window.XMLHttpRequest) {
+                request = new XMLHttpRequest;
+        } else if (window.ActiveXObject) {
+                request = new ActiveXObject("Microsoft.XMLHttp");
+        }
+        if (request) {
+                request.open("GET", url);
+                if (request.status == 200) { return true; }
+        }
+
+        return false;
+}
+
+function checkURL (abc) {
+  var string = abc.value;
+  if (!~string.indexOf("http")) {
+    string = "http://" + string;
+  }
+  abc.value = string;
+  return abc
+}
+
 function submitButtonHandler(evt) {
   var testForm = document.getElementById('usrform');
 
@@ -70,10 +97,12 @@ function submitButtonHandler(evt) {
   }, false);
 
   xhr.onload = function (e) {
-    let modal = $('#myModal');
     $('#modalB').append("<br>");
     $('#modalB').append("<a href='http://www.felipech.com/og/" + xhr.responseText + "'id='copy'>http://www.felipech.com/og/" + xhr.responseText + "</a>");
-    modal.modal('toggle');
+    $('#myModal').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
     $('#reset').click();
   }
   xhr.send(formD);
