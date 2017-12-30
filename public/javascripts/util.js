@@ -3,7 +3,7 @@ var compressed;
 const imageCompressor = new ImageCompressor();
 
 document.getElementById('file').addEventListener('change', (e) => {
-  
+
   const file = e.target.files[0];
 
   if (!file) {
@@ -18,6 +18,7 @@ document.getElementById('file').addEventListener('change', (e) => {
       var reader = new window.FileReader();
       reader.readAsDataURL(result);
       reader.onloadend = function () {
+        compressed = reader.result
         loading.hide();
         $('#image-preview').attr('src', reader.result);
         $('#image-preview').show();
@@ -52,6 +53,7 @@ function submitButtonHandler(evt) {
   evt.stopPropagation();
 
   var formD = new FormData(testForm);
+  formD.set('pic', compressed); //Actually send the compressed img
 
   var xhr = new XMLHttpRequest();
   xhr.open("POST", "/fbshare", true);

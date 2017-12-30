@@ -10,9 +10,8 @@
             "name": "Attach to node",
             "port": 9229,
             "protocol": "inspector",
-            "address": "10.0.0.34",
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/home/pi/ogshortner/"
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}"
         },
         {
             "name": "Node Js",
