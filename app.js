@@ -42,7 +42,8 @@ var Storage = multer.diskStorage({
     fileContent += '<meta property="og:title" content="' + req.body.title + '" />';
     fileContent += '<meta property="og:description" content="' + req.body.desc + '" />';
     fileContent += '<meta property="og:image" content="./uploads/' + req.ui + "/" + req.ui + '.' + file.mimetype.slice(file.mimetype.indexOf('/')+1,file.mimetype.length) + '" />';
-    fileContent += '<script>window.location = "' + req.body.link + '";</script>'
+    fileContent += '<script>window.location = "' + req.body.link + '";</script>';
+    fileContent += '<script type="text/javascript">  var appInsights=window.appInsights||function(a){    function b(a){c[a]=function(){var b=arguments;c.queue.push(function(){c[a].apply(c,b)})}}var c={config:a},d=document,e=window;setTimeout(function(){var b=d.createElement("script");b.src=a.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js",d.getElementsByTagName("script")[0].parentNode.appendChild(b)});try{c.cookie=d.cookie}catch(a){}c.queue=[];for(var f=["Event","Exception","Metric","PageView","Trace","Dependency"];f.length;)b("track"+f.pop());if(b("setAuthenticatedUserContext"),b("clearAuthenticatedUserContext"),b("startTrackEvent"),b("stopTrackEvent"),b("startTrackPage"),b("stopTrackPage"),b("flush"),!a.disableExceptionTracking){f="onerror",b("_"+f);var g=e[f];e[f]=function(a,b,d,e,h){var i=g&&g(a,b,d,e,h);return!0!==i&&c["_"+f](a,b,d,e,h),i}}return c    }({        instrumentationKey:"cfe3dd84-c717-4bc1-8275-f9c7fe5fc564"    });      window.appInsights=appInsights,appInsights.queue&&0===appInsights.queue.length&&appInsights.trackPageView();</script>';
     fileContent += '</head><body><p>Please wait, you are being redirected...</p></body></html>';
 
    
